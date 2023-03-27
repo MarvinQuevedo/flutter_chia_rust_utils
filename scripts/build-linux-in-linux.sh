@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-
+ 
 cd chia_rust_utils 
+CURR_VERSION=flutter_chia_rust_utils-v`awk '/^version: /{print $2}' ../pubspec.yaml`
+
 # Setup
 BUILD_DIR=platform-build
 mkdir $BUILD_DIR
@@ -24,6 +26,7 @@ cp "../target/release/$LIBNAME" "$PLATFORM_NAME/"
 
 # Archive the dynamic libs
 tar -czvf linux.tar.gz linux-*
+cp linux.tar.gz ../../linux/$CURR_VERSION.tar.gz
 
 # Cleanup
 rm -rf linux-*

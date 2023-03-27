@@ -45,3 +45,23 @@ set(flutter_chia_rust_utils_bundled_libraries
   ""
   PARENT_SCOPE
 )
+
+
+# Download the binaries if they are not already present.
+set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
+set(ArchivePath "${LibRoot}.tar.gz")
+if(NOT EXISTS ${ArchivePath})
+  file(DOWNLOAD
+    "https://github.com/YourGitHubAccount/repo_name/releases/download/${LibraryVersion}/other.tar.gz"
+    ${ArchivePath}
+    TLS_VERIFY ON
+  )
+endif()
+
+# List of absolute paths to libraries that should be bundled with the plugin.
+# This list could contain prebuilt libraries, or libraries created by an
+# external build triggered from this build file.
+set(simple_audio_bundled_libraries
+  "${CMAKE_CURRENT_SOURCE_DIR}/libsimple_audio.so"
+  PARENT_SCOPE
+)
