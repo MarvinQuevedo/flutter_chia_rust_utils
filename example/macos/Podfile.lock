@@ -1,0 +1,22 @@
+PODS:
+  - flutter_chia_rust_utils (0.0.1):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
+
+DEPENDENCIES:
+  - flutter_chia_rust_utils (from `Flutter/ephemeral/.symlinks/plugins/flutter_chia_rust_utils/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+
+EXTERNAL SOURCES:
+  flutter_chia_rust_utils:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_chia_rust_utils/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+
+SPEC CHECKSUMS:
+  flutter_chia_rust_utils: 3e9e705f59ca7a92b01af0725fbf13dd8156b18e
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+
+PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
+
+COCOAPODS: 1.11.3

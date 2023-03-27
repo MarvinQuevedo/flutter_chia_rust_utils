@@ -1,0 +1,40 @@
+[package]
+name = "rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "=1.0.65"
+flutter_rust_bridge = "1.68.0"
+num = "0.4"
+image = "0.24.3"
+crossbeam = "0.8"
+sha2 = "=0.10.2"
+tiny-bip39 = "=1.0.0"
+chia = { path = "../../../", version = ">=0.2.4" }
+chia-bls = { path = "../../../chia-bls", version = ">=0.2.4" }
+clvm-utils = "0.2.4"
+clvmr = "0.1.24"
+clvm_tools_rs = { git = "https://github.com/MarvinQuevedo/clvm_tools_rs.git", rev ='fb506528eba43b742a54a3e20f31d74c05d1e5a2' }
+serde = { version = "1.0", features = ["derive"] }
+lazy_static = "1.4.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+num-bigint = "=0.4.3"
+blst = "0.3.10"
+blake3 = "1.3.3"
+hex = "0.4.3"
+log = "0.4.17"
+yaml-rust = "0.4"
+linked-hash-map = "0.5.6"
+
+[lib]
+name = "rust_bls_flutter"
+crate-type = ["cdylib", "staticlib"]
+
+
+[[bin]]
+name = "test"
+path = "src/main.rs"
