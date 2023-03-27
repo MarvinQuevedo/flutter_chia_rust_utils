@@ -2,7 +2,7 @@
 
 ./scripts/version.sh
 
-cd rust 
+cd chia_rust_utils 
 #cargo clean
  
 
