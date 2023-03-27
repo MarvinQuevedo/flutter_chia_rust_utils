@@ -1,0 +1,6 @@
+[submodule "chia_rust_utils"]
+	path = chia_rust_utils
+	url = https://github.com/MarvinQuevedo/chia_rust_utils
+[submodule "chia_rs"]
+	path = chia_rs
+	url = https://github.com/MarvinQuevedo/chia_rs.git
