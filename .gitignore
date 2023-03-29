@@ -40,3 +40,4 @@ macos/Frameworks/**
 windows/**.dll
 android/**.tar.gz
 windows/**.tar.gz
+linux/**.tar.gz
