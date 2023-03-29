@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         
         {
             "name": "example",
@@ -11,6 +12,15 @@
             "request": "launch",
             "type": "dart"
         },
+          
+        {
+            "name": "(OSX) Launch",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceRoot}/chia_rust_utils/target/debug/test",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+        }
          
     ]
 }
