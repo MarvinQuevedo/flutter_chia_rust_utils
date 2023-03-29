@@ -11,6 +11,7 @@ remote_zip_name = "#{framework_name}.zip"
 url = "https://github.com/MarvinQuevedo/flutter_chia_rust_utils/releases/download/#{release_tag_name}/#{remote_zip_name}"  
 local_zip_name = "#{release_tag_name}.zip"
 `
+mkdir -p Frameworks
 cd Frameworks
 rm -rf #{framework_name}
 if [ ! -f #{local_zip_name} ]
