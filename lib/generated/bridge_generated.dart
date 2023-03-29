@@ -174,10 +174,22 @@ abstract class Rust {
 
   FlutterRustBridgeTaskConstMeta get kProgramRunConstMeta;
 
+  Future<Uint8List> programFromAtomBytes(
+      {required Uint8List programBytes, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kProgramFromAtomBytesConstMeta;
+
   Future<Uint8List> getPuzzleFromPublicKey(
       {required Uint8List pk, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kGetPuzzleFromPublicKeyConstMeta;
+
+  Future<Uint8List> catsCreateCatPuzzle(
+      {required Uint8List tailHash,
+      required Uint8List innerPuzzleHash,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kCatsCreateCatPuzzleConstMeta;
 }
 
 class ApiOutputProgram {
@@ -828,6 +840,25 @@ class RustImpl implements Rust {
         argNames: ["programBytes", "argsStr"],
       );
 
+  Future<Uint8List> programFromAtomBytes(
+      {required Uint8List programBytes, dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) =>
+          _platform.inner.wire_program_from_atom_bytes(port_, arg0),
+      parseSuccessData: _wire2api_uint_8_list,
+      constMeta: kProgramFromAtomBytesConstMeta,
+      argValues: [programBytes],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kProgramFromAtomBytesConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "program_from_atom_bytes",
+        argNames: ["programBytes"],
+      );
+
   Future<Uint8List> getPuzzleFromPublicKey(
       {required Uint8List pk, dynamic hint}) {
     var arg0 = _platform.api2wire_uint_8_list(pk);
@@ -845,6 +876,28 @@ class RustImpl implements Rust {
       const FlutterRustBridgeTaskConstMeta(
         debugName: "get_puzzle_from_public_key",
         argNames: ["pk"],
+      );
+
+  Future<Uint8List> catsCreateCatPuzzle(
+      {required Uint8List tailHash,
+      required Uint8List innerPuzzleHash,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(tailHash);
+    var arg1 = _platform.api2wire_uint_8_list(innerPuzzleHash);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) =>
+          _platform.inner.wire_cats_create_cat_puzzle(port_, arg0, arg1),
+      parseSuccessData: _wire2api_uint_8_list,
+      constMeta: kCatsCreateCatPuzzleConstMeta,
+      argValues: [tailHash, innerPuzzleHash],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kCatsCreateCatPuzzleConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "cats_create_cat_puzzle",
+        argNames: ["tailHash", "innerPuzzleHash"],
       );
 
   void dispose() {
@@ -1658,6 +1711,23 @@ class RustWire implements FlutterRustBridgeWireBase {
       void Function(
           int, ffi.Pointer<wire_uint_8_list>, ffi.Pointer<wire_StringList>)>();
 
+  void wire_program_from_atom_bytes(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> program_bytes,
+  ) {
+    return _wire_program_from_atom_bytes(
+      port_,
+      program_bytes,
+    );
+  }
+
+  late final _wire_program_from_atom_bytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int64,
+              ffi.Pointer<wire_uint_8_list>)>>('wire_program_from_atom_bytes');
+  late final _wire_program_from_atom_bytes = _wire_program_from_atom_bytesPtr
+      .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+
   void wire_get_puzzle_from_public_key(
     int port_,
     ffi.Pointer<wire_uint_8_list> pk,
@@ -1675,6 +1745,27 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _wire_get_puzzle_from_public_key =
       _wire_get_puzzle_from_public_keyPtr
           .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+
+  void wire_cats_create_cat_puzzle(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> tail_hash,
+    ffi.Pointer<wire_uint_8_list> inner_puzzle_hash,
+  ) {
+    return _wire_cats_create_cat_puzzle(
+      port_,
+      tail_hash,
+      inner_puzzle_hash,
+    );
+  }
+
+  late final _wire_cats_create_cat_puzzlePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int64, ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_uint_8_list>)>>('wire_cats_create_cat_puzzle');
+  late final _wire_cats_create_cat_puzzle =
+      _wire_cats_create_cat_puzzlePtr.asFunction<
+          void Function(int, ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_uint_8_list>)>();
 
   ffi.Pointer<wire_StringList> new_StringList_0(
     int len,
