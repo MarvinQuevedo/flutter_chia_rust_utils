@@ -1,4 +1,8 @@
 
+## 0.0.59+4
+
+* Fix ios and macos build
+
 ## 0.0.59+3
 
 * Fix ios and macos build
