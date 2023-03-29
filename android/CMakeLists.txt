@@ -15,7 +15,7 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/src/main/jniLibs")
 set(ArchivePath "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
-    "https://github.com/MarvinQuevedo/chia_rs/releases/download/${LibraryVersion}/android.tar.gz"
+    "https://github.com/MarvinQuevedo/flutter_chia_rust_utils/releases/download/${LibraryVersion}/android.tar.gz"
     ${ArchivePath}
     TLS_VERIFY ON
   )

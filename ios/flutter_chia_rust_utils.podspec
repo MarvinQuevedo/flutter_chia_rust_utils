@@ -5,7 +5,7 @@ release_tag_name = 'flutter_chia_rust_utils-v0.0.59+1' # generated; do not edit
 #
 framework_name = 'BlsFlutter.xcframework'
 remote_zip_name = "#{framework_name}.zip"
-url = "https://github.com/MarvinQuevedo/chia_rs/releases/download/#{release_tag_name}/#{remote_zip_name}"  
+url = "https://github.com/MarvinQuevedo/flutter_chia_rust_utils/releases/download/#{release_tag_name}/#{remote_zip_name}"  
 local_zip_name = "#{release_tag_name}.zip"
 `
 cd Frameworks
