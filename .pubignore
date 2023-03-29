@@ -35,8 +35,11 @@ android/app/src/main/jniLibs/
 android/src/main/jniLibs/ 
 **.a
 **.dylib
-ios/Frameworks/**
-macos/Frameworks/**
+ios/Frameworks/**.xcframework
+ios/Frameworks/**.zip
+
+macos/Frameworks/**.zip
+macos/Frameworks/**.xcframework
 windows/**.dll
 android/**.tar.gz
 windows/**.tar.gz
