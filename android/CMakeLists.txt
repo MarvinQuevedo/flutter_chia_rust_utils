@@ -1,4 +1,4 @@
-set(LibraryVersion "flutter_chia_rust_utils-v0.0.59+1") # generated; do not edit
+set(LibraryVersion "flutter_chia_rust_utils-v0.0.59+3") # generated; do not edit
 
 # Unlike the Windows & Linux CMakeLists.txt, this Android equivalent is just here
 # to download the Android binaries into src/main/jniLibs/ and does not build anything.

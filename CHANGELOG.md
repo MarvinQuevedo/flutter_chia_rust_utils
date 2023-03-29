@@ -1,4 +1,8 @@
 
+## 0.0.59+2
+
+* remove big files
+
 ## 0.0.59+1
 
 * implement Create Cat program

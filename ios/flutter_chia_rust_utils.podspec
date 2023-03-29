@@ -1,4 +1,4 @@
-release_tag_name = 'flutter_chia_rust_utils-v0.0.59+1' # generated; do not edit
+release_tag_name = 'flutter_chia_rust_utils-v0.0.59+3' # generated; do not edit
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint flutter_chia_rust_utils.podspec` to validate before publishing.
@@ -34,7 +34,7 @@ A new Flutter plugin project.
   s.platform = :ios, '9.0'
   s.static_framework = true
   s.vendored_frameworks = "Frameworks/#{framework_name}"
-  s.pod_target_xcconfig = { 'STRIP_STYLE' => 'non-global' }  # ...  'OTHER_LDFLAGS' => '-lObjC' 
+  s.pod_target_xcconfig = { 'STRIP_STYLE' => 'non-global'  }
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' } 
