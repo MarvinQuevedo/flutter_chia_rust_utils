@@ -1,4 +1,10 @@
 
+## 0.0.59+1
+
+* implement Create Cat program
+* refactor from atom bytes and from serialized bytes in program
+* refactor repository
+
 ## 0.0.58+2
 
 * Restore windows cmake file
