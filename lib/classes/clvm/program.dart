@@ -198,10 +198,20 @@ class Program {
   }
 
   ///  Program from bytes
-  static Future<Program> fromBytes(Bytes bytes) async {
+  static Future<Program> serializedFromBytes(Bytes bytes) async {
     return Program._(
       sourceType: _ProgramSourceType.bytes,
       sourceValue: bytes,
+    );
+  }
+
+  /// Atom program from bytes
+  static Future<Program> fromAtomBytes(Bytes atomBytes) async {
+    final serializedProgram =
+        await api.programFromAtomBytes(programBytes: atomBytes.byteList);
+    return Program._(
+      sourceType: _ProgramSourceType.bytes,
+      sourceValue: serializedProgram,
     );
   }
 

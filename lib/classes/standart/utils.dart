@@ -13,8 +13,8 @@ Future<Program> getPuzzleFromPk(PublicKey publicKey) async {
 Future<Program> getPuzzleFromPkAndHiddenPuzzle(
     PublicKey publicKey, Program hiddenPuzzleProgram) async {
   final syntheticPubKey = await calculateSyntheticPublicKeyProgram.run([
-    await Program.fromBytes(publicKey.toBytes()),
-    await Program.fromBytes(await hiddenPuzzleProgram.treeHash()),
+    await Program.fromAtomBytes(publicKey.toBytes()),
+    await Program.fromAtomBytes(await hiddenPuzzleProgram.treeHash()),
   ]);
 
   final curried = await p2DelegatedPuzzleOrHiddenPuzzleProgram
