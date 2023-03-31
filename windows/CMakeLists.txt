@@ -1,4 +1,4 @@
-set(LibraryVersion "flutter_chia_rust_utils-v0.0.59+5") # generated; do not edit
+set(LibraryVersion "flutter_chia_rust_utils-v0.0.60+1") # generated; do not edit
 # The Flutter tooling requires that developers have a version of Visual Studio
 # installed that includes CMake 3.14 or later. You should not increase this
 # version, as doing so will cause the plugin to fail to compile for some
