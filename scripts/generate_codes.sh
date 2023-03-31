@@ -5,6 +5,7 @@ flutter_rust_bridge_codegen --rust-input chia_rust_utils/src/api.rs \
 
 flutter_rust_bridge_codegen \
     -r chia_rust_utils/src/api.rs  \
+    --llvm-path /opt/homebrew/opt/llvm/ \
     -d lib/generated/bridge_generated.dart \
     -c ios/Classes/BridgeGenerated.h \
     -e macos/Classes/   # if building for MacOS, extra path is essential
