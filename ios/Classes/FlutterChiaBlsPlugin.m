@@ -6,7 +6,7 @@
       methodChannelWithName:@"flutter_chia_bls"
             binaryMessenger:[registrar messenger]];
   FlutterChiaBlsPlugin* instance = [[FlutterChiaBlsPlugin alloc] init];
-    int64_t result = dummy_method_to_enforce_bundling();
+    int64_t _ = dummy_method_to_enforce_bundling();
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 
@@ -16,6 +16,11 @@
   } else {
     result(FlutterMethodNotImplemented);
   }
+}
+
+ 
++ (int64_t) dummyMethodToEnforceBundling {
+    return dummy_method_to_enforce_bundling();
 }
 
 @end
