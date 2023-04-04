@@ -72,7 +72,7 @@ class Program {
         .toList());
 
     final programBytes = await api.programCurry(
-      programBytes: await _programBytes,
+      serProgramBytes: await _programBytes,
       argsStr: programArgs,
     );
 
@@ -85,7 +85,7 @@ class Program {
   /// convert to source code
   Future<String> disassemble() async {
     final parsed =
-        await api.programDisassemble(programBytes: await _programBytes);
+        await api.programDisassemble(serProgramBytes: await _programBytes);
     return parsed;
   }
 
@@ -126,7 +126,7 @@ class Program {
     );
 
     final result = await api.programRun(
-      programBytes: await _programBytes,
+      serProgramBytes: await _programBytes,
       argsStr: argsStr,
     );
 
@@ -158,22 +158,25 @@ class Program {
   /// obtain the program hash
   Future<Puzzlehash> treeHash() async {
     final innerBytes =
-        await api.programTreeHash(programBytes: await _programBytes);
+        await api.programTreeHash(serProgramBytes: await _programBytes);
     return Puzzlehash(innerBytes);
   }
+
+  /// sinonim of treeHash
+  Future<Puzzlehash> hash() => treeHash();
 
   /// uncurry the program
   Future<UncurriedProgram> uncurry() async {
     final uncurried =
-        await api.programUncurry(programBytes: await _programBytes);
+        await api.programUncurry(serProgramBytes: await _programBytes);
     return UncurriedProgram._fromUncurriedProgram(uncurried);
   }
 
   /// parse bytes to program
-  static Program deserializeBytes(Bytes bytes) {
+  static Program deserializeBytes(List<int> bytes) {
     final program = Program._(
       sourceType: _ProgramSourceType.bytes,
-      sourceValue: bytes,
+      sourceValue: Bytes(bytes),
     );
     return program;
   }
@@ -205,10 +208,16 @@ class Program {
     );
   }
 
+  Future<Bytes> toBytes() async {
+    final atomBytes =
+        await api.programToAtomBytes(serProgramBytes: await _programBytes);
+    return Bytes(atomBytes);
+  }
+
   /// Atom program from bytes
   static Future<Program> fromAtomBytes(Bytes atomBytes) async {
     final serializedProgram =
-        await api.programFromAtomBytes(programBytes: atomBytes.byteList);
+        await api.programFromAtomBytes(serProgramBytes: atomBytes.byteList);
     return Program._(
       sourceType: _ProgramSourceType.bytes,
       sourceValue: serializedProgram,
