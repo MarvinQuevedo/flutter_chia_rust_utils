@@ -118,23 +118,25 @@ void wire_cmd_program_opd(int64_t port_, struct wire_StringList *args);
 
 void wire_cmd_program_cldb(int64_t port_, struct wire_StringList *args);
 
-void wire_program_tree_hash(int64_t port_, struct wire_uint_8_list *program_bytes);
+void wire_program_tree_hash(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
 
 void wire_program_curry(int64_t port_,
-                        struct wire_uint_8_list *program_bytes,
+                        struct wire_uint_8_list *ser_program_bytes,
                         struct wire_StringList *args_str);
 
-void wire_program_uncurry(int64_t port_, struct wire_uint_8_list *program_bytes);
+void wire_program_uncurry(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
 
 void wire_program_from_list(int64_t port_, struct wire_StringList *program_list);
 
-void wire_program_disassemble(int64_t port_, struct wire_uint_8_list *program_bytes);
+void wire_program_disassemble(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
 
 void wire_program_run(int64_t port_,
-                      struct wire_uint_8_list *program_bytes,
+                      struct wire_uint_8_list *ser_program_bytes,
                       struct wire_StringList *args_str);
 
-void wire_program_from_atom_bytes(int64_t port_, struct wire_uint_8_list *program_bytes);
+void wire_program_from_atom_bytes(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
+
+void wire_program_to_atom_bytes(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
 
 void wire_get_puzzle_from_public_key(int64_t port_, struct wire_uint_8_list *pk);
 
@@ -185,6 +187,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_program_disassemble);
     dummy_var ^= ((int64_t) (void*) wire_program_run);
     dummy_var ^= ((int64_t) (void*) wire_program_from_atom_bytes);
+    dummy_var ^= ((int64_t) (void*) wire_program_to_atom_bytes);
     dummy_var ^= ((int64_t) (void*) wire_get_puzzle_from_public_key);
     dummy_var ^= ((int64_t) (void*) wire_cats_create_cat_puzzle);
     dummy_var ^= ((int64_t) (void*) new_StringList_0);

@@ -141,19 +141,19 @@ abstract class Rust {
   FlutterRustBridgeTaskConstMeta get kCmdProgramCldbConstMeta;
 
   Future<U8Array32> programTreeHash(
-      {required Uint8List programBytes, dynamic hint});
+      {required Uint8List serProgramBytes, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramTreeHashConstMeta;
 
   Future<Uint8List> programCurry(
-      {required Uint8List programBytes,
+      {required Uint8List serProgramBytes,
       required List<String> argsStr,
       dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramCurryConstMeta;
 
   Future<UncurriedProgramToDart> programUncurry(
-      {required Uint8List programBytes, dynamic hint});
+      {required Uint8List serProgramBytes, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramUncurryConstMeta;
 
@@ -163,21 +163,26 @@ abstract class Rust {
   FlutterRustBridgeTaskConstMeta get kProgramFromListConstMeta;
 
   Future<String> programDisassemble(
-      {required Uint8List programBytes, dynamic hint});
+      {required Uint8List serProgramBytes, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramDisassembleConstMeta;
 
   Future<ApiOutputProgram> programRun(
-      {required Uint8List programBytes,
+      {required Uint8List serProgramBytes,
       required List<String> argsStr,
       dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramRunConstMeta;
 
   Future<Uint8List> programFromAtomBytes(
-      {required Uint8List programBytes, dynamic hint});
+      {required Uint8List serProgramBytes, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramFromAtomBytesConstMeta;
+
+  Future<Uint8List> programToAtomBytes(
+      {required Uint8List serProgramBytes, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kProgramToAtomBytesConstMeta;
 
   Future<Uint8List> getPuzzleFromPublicKey(
       {required Uint8List pk, dynamic hint});
@@ -727,13 +732,13 @@ class RustImpl implements Rust {
       );
 
   Future<U8Array32> programTreeHash(
-      {required Uint8List programBytes, dynamic hint}) {
-    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+      {required Uint8List serProgramBytes, dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner.wire_program_tree_hash(port_, arg0),
       parseSuccessData: _wire2api_u8_array_32,
       constMeta: kProgramTreeHashConstMeta,
-      argValues: [programBytes],
+      argValues: [serProgramBytes],
       hint: hint,
     ));
   }
@@ -741,20 +746,20 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramTreeHashConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_tree_hash",
-        argNames: ["programBytes"],
+        argNames: ["serProgramBytes"],
       );
 
   Future<Uint8List> programCurry(
-      {required Uint8List programBytes,
+      {required Uint8List serProgramBytes,
       required List<String> argsStr,
       dynamic hint}) {
-    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
     var arg1 = _platform.api2wire_StringList(argsStr);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner.wire_program_curry(port_, arg0, arg1),
       parseSuccessData: _wire2api_uint_8_list,
       constMeta: kProgramCurryConstMeta,
-      argValues: [programBytes, argsStr],
+      argValues: [serProgramBytes, argsStr],
       hint: hint,
     ));
   }
@@ -762,17 +767,17 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramCurryConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_curry",
-        argNames: ["programBytes", "argsStr"],
+        argNames: ["serProgramBytes", "argsStr"],
       );
 
   Future<UncurriedProgramToDart> programUncurry(
-      {required Uint8List programBytes, dynamic hint}) {
-    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+      {required Uint8List serProgramBytes, dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner.wire_program_uncurry(port_, arg0),
       parseSuccessData: _wire2api_uncurried_program_to_dart,
       constMeta: kProgramUncurryConstMeta,
-      argValues: [programBytes],
+      argValues: [serProgramBytes],
       hint: hint,
     ));
   }
@@ -780,7 +785,7 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramUncurryConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_uncurry",
-        argNames: ["programBytes"],
+        argNames: ["serProgramBytes"],
       );
 
   Future<Uint8List> programFromList(
@@ -802,13 +807,13 @@ class RustImpl implements Rust {
       );
 
   Future<String> programDisassemble(
-      {required Uint8List programBytes, dynamic hint}) {
-    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+      {required Uint8List serProgramBytes, dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner.wire_program_disassemble(port_, arg0),
       parseSuccessData: _wire2api_String,
       constMeta: kProgramDisassembleConstMeta,
-      argValues: [programBytes],
+      argValues: [serProgramBytes],
       hint: hint,
     ));
   }
@@ -816,20 +821,20 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramDisassembleConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_disassemble",
-        argNames: ["programBytes"],
+        argNames: ["serProgramBytes"],
       );
 
   Future<ApiOutputProgram> programRun(
-      {required Uint8List programBytes,
+      {required Uint8List serProgramBytes,
       required List<String> argsStr,
       dynamic hint}) {
-    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
     var arg1 = _platform.api2wire_StringList(argsStr);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner.wire_program_run(port_, arg0, arg1),
       parseSuccessData: _wire2api_api_output_program,
       constMeta: kProgramRunConstMeta,
-      argValues: [programBytes, argsStr],
+      argValues: [serProgramBytes, argsStr],
       hint: hint,
     ));
   }
@@ -837,18 +842,18 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramRunConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_run",
-        argNames: ["programBytes", "argsStr"],
+        argNames: ["serProgramBytes", "argsStr"],
       );
 
   Future<Uint8List> programFromAtomBytes(
-      {required Uint8List programBytes, dynamic hint}) {
-    var arg0 = _platform.api2wire_uint_8_list(programBytes);
+      {required Uint8List serProgramBytes, dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) =>
           _platform.inner.wire_program_from_atom_bytes(port_, arg0),
       parseSuccessData: _wire2api_uint_8_list,
       constMeta: kProgramFromAtomBytesConstMeta,
-      argValues: [programBytes],
+      argValues: [serProgramBytes],
       hint: hint,
     ));
   }
@@ -856,7 +861,26 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramFromAtomBytesConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_from_atom_bytes",
-        argNames: ["programBytes"],
+        argNames: ["serProgramBytes"],
+      );
+
+  Future<Uint8List> programToAtomBytes(
+      {required Uint8List serProgramBytes, dynamic hint}) {
+    var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) =>
+          _platform.inner.wire_program_to_atom_bytes(port_, arg0),
+      parseSuccessData: _wire2api_uint_8_list,
+      constMeta: kProgramToAtomBytesConstMeta,
+      argValues: [serProgramBytes],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kProgramToAtomBytesConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "program_to_atom_bytes",
+        argNames: ["serProgramBytes"],
       );
 
   Future<Uint8List> getPuzzleFromPublicKey(
@@ -1605,11 +1629,11 @@ class RustWire implements FlutterRustBridgeWireBase {
 
   void wire_program_tree_hash(
     int port_,
-    ffi.Pointer<wire_uint_8_list> program_bytes,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
   ) {
     return _wire_program_tree_hash(
       port_,
-      program_bytes,
+      ser_program_bytes,
     );
   }
 
@@ -1622,12 +1646,12 @@ class RustWire implements FlutterRustBridgeWireBase {
 
   void wire_program_curry(
     int port_,
-    ffi.Pointer<wire_uint_8_list> program_bytes,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
     ffi.Pointer<wire_StringList> args_str,
   ) {
     return _wire_program_curry(
       port_,
-      program_bytes,
+      ser_program_bytes,
       args_str,
     );
   }
@@ -1642,11 +1666,11 @@ class RustWire implements FlutterRustBridgeWireBase {
 
   void wire_program_uncurry(
     int port_,
-    ffi.Pointer<wire_uint_8_list> program_bytes,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
   ) {
     return _wire_program_uncurry(
       port_,
-      program_bytes,
+      ser_program_bytes,
     );
   }
 
@@ -1676,11 +1700,11 @@ class RustWire implements FlutterRustBridgeWireBase {
 
   void wire_program_disassemble(
     int port_,
-    ffi.Pointer<wire_uint_8_list> program_bytes,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
   ) {
     return _wire_program_disassemble(
       port_,
-      program_bytes,
+      ser_program_bytes,
     );
   }
 
@@ -1693,12 +1717,12 @@ class RustWire implements FlutterRustBridgeWireBase {
 
   void wire_program_run(
     int port_,
-    ffi.Pointer<wire_uint_8_list> program_bytes,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
     ffi.Pointer<wire_StringList> args_str,
   ) {
     return _wire_program_run(
       port_,
-      program_bytes,
+      ser_program_bytes,
       args_str,
     );
   }
@@ -1713,11 +1737,11 @@ class RustWire implements FlutterRustBridgeWireBase {
 
   void wire_program_from_atom_bytes(
     int port_,
-    ffi.Pointer<wire_uint_8_list> program_bytes,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
   ) {
     return _wire_program_from_atom_bytes(
       port_,
-      program_bytes,
+      ser_program_bytes,
     );
   }
 
@@ -1726,6 +1750,23 @@ class RustWire implements FlutterRustBridgeWireBase {
           ffi.Void Function(ffi.Int64,
               ffi.Pointer<wire_uint_8_list>)>>('wire_program_from_atom_bytes');
   late final _wire_program_from_atom_bytes = _wire_program_from_atom_bytesPtr
+      .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+
+  void wire_program_to_atom_bytes(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> ser_program_bytes,
+  ) {
+    return _wire_program_to_atom_bytes(
+      port_,
+      ser_program_bytes,
+    );
+  }
+
+  late final _wire_program_to_atom_bytesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int64,
+              ffi.Pointer<wire_uint_8_list>)>>('wire_program_to_atom_bytes');
+  late final _wire_program_to_atom_bytes = _wire_program_to_atom_bytesPtr
       .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
 
   void wire_get_puzzle_from_public_key(
