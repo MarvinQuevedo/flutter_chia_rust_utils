@@ -1,3 +1,8 @@
+
+## 0.0.61+1
+
+* Ozone Wallet integration refactor
+
 ## 0.0.60+1
 
 * Fix relase build in iOS and macOS
