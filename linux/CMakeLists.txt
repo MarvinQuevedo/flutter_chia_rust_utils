@@ -1,4 +1,4 @@
-set(LibraryVersion "flutter_chia_rust_utils-v0.0.59+5") # generated; do not edit
+set(LibraryVersion "flutter_chia_rust_utils-v0.0.61+1") # generated; do not edit
 # installed. You should not increase this version, as doing so will cause
 # the plugin to fail to compile for some customers of the plugin.
 cmake_minimum_required(VERSION 3.10)

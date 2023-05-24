@@ -2,7 +2,7 @@
 
  
 
-import '../../../clvm/program.dart';
+import '../../../../clvm/program.dart';
 
 final calculateSyntheticPublicKeyProgram = Program.deserializeHex(
   'ff1dff02ffff1effff0bff02ff05808080',

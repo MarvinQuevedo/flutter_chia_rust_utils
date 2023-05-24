@@ -1,6 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars, non_constant_identifier_names
 
-import '../../../clvm/program.dart';
+import '../../../../clvm/program.dart';
 import '../p2_conditions/p2_conditions.dart';
 
 final p2DelegatedPuzzleOrHiddenPuzzleProgram = Program.deserializeHex(

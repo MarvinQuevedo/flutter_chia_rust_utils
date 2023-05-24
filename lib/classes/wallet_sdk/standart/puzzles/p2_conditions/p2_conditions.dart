@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars, non_constant_identifier_names
 
  
-import '../../../clvm/program.dart';
+import '../../../../clvm/program.dart';
 
 final P2_CONDITIONS_MOD = Program.deserializeHex(
   "ff04ffff0101ff0280",

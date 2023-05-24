@@ -16,7 +16,7 @@ const singletonPathNumber = 5;
 const poolingAuthenticationPathNumber = 6;
 
 /// BLS derive keys toolchain
-class DeriverKeys {
+class BlsDeriverKeys {
   /// Derive a private key from a path
   static Future<PrivateKey> derivePath(PrivateKey sk, List<int> path) async {
     final Uint32List pathBytes = Uint32List.fromList(path);
@@ -59,14 +59,15 @@ class DeriverKeys {
   }
 
   /// Obtain wallet private key from master private key
-  Future<PrivateKey> masterSkToWalletSk(PrivateKey masterSk, int index) async {
+  static Future<PrivateKey> masterSkToWalletSk(
+      PrivateKey masterSk, int index) async {
     final result = await api.pubMasterToWalletHardened(
         master: masterSk.byteList, idx: index);
     return PrivateKey(result);
   }
 
   /// Obtain unhardenedwallet private key from master private key
-  Future<PrivateKey> masterSkToWalletSkUnhardened(
+  static Future<PrivateKey> masterSkToWalletSkUnhardened(
       PrivateKey masterSk, int index) async {
     final result = await api.pubMasterToWalletUnhardened(
         master: masterSk.byteList, idx: index);
@@ -92,7 +93,7 @@ class DeriverKeys {
   }
 
   /// Obtain singleton private key from master private key
-  Future<PrivateKey> masterSkToSingletonOwnerSk(
+  static Future<PrivateKey> masterSkToSingletonOwnerSk(
       PrivateKey masterSk, int poolWalletIndex) async {
     final sk = await api.pubMasterToPoolSingleton(
       master: masterSk.byteList,
@@ -102,7 +103,7 @@ class DeriverKeys {
   }
 
   /// Obtain pooling authentication private key from master private key
-  Future<PrivateKey> masterSkToPoolingAuthenticationSk(
+  static Future<PrivateKey> masterSkToPoolingAuthenticationSk(
     PrivateKey masterSk,
     int poolWalletIndex,
     int index,
@@ -116,25 +117,25 @@ class DeriverKeys {
   }
 
   /// Obtain pooling owner private key from master private key
-  Future<dynamic> getPuzzleFromPk(PublicKey publicKey) {
+  static Future<dynamic> getPuzzleFromPk(PublicKey publicKey) {
     throw UnimplementedError();
   }
 
   /// Obtain pooling owner private key from master private key
-  Future<dynamic> getPuzzleFromPkAndHiddenPuzzle(
+  static Future<dynamic> getPuzzleFromPkAndHiddenPuzzle(
       PublicKey publicKey, dynamic hiddenPuzzleProgram) {
     throw UnimplementedError();
   }
 
   /// Get private key from intermediate private key
-  Future<PrivateKey> rootWalletSkToWalletSk(
+  static Future<PrivateKey> rootWalletSkToWalletSk(
       PrivateKey rootWalletSk, int index) async {
     final result = await derivePath(rootWalletSk, [index]);
     return result;
   }
 
   ///  Obtain intermediate  private key from master private key
-  Future<PrivateKey> masterSkToRootWalletSk(
+  static Future<PrivateKey> masterSkToRootWalletSk(
     PrivateKey rootWalletSk,
   ) async {
     final result = await api.pubMasterToWalletHardenedIntermediate(
@@ -144,14 +145,14 @@ class DeriverKeys {
   }
 
   /// Get unhardened private key from intermediate private key
-  Future<PrivateKey> rootWalletSkToWalletSkUnhardened(
+  static Future<PrivateKey> rootWalletSkToWalletSkUnhardened(
       PrivateKey rootWalletSk, int index) async {
     final result = await derivePathUnhardened(rootWalletSk, [index]);
     return result;
   }
 
   /// Obtain unhardened intermediate  private key from master private key
-  Future<PrivateKey> masterSkToRootWalletSkUnhardened(
+  static Future<PrivateKey> masterSkToRootWalletSkUnhardened(
     PrivateKey rootWalletSk,
   ) async {
     final result = await api.pubMasterToWalletUnhardenedIntermediate(

@@ -1,5 +1,6 @@
-import 'package:example/test_functions.dart';
 import 'package:flutter/material.dart';
+
+import 'derivation_tests.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,12 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        
           onPressed: () {
             setState(() {
               result = [];
             });
-            runTest((value) {
+            runDerivationTest((value) {
               setState(() {
                 final splits = value.split(":");
                 result += [

@@ -1,3 +1,6 @@
+## 0.0.60+1
+
+* Fix relase build in iOS and macOS
 
 ## 0.0.59+4
 
@@ -42,7 +45,6 @@
 
 * Add documentation to principal public classes and methods
 * Add a bigger description for plugin
-
 
 ## 0.0.56
 
