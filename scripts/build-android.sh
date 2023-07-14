@@ -13,7 +13,7 @@ JNI_DIR=jniLibs
 mkdir -p $JNI_DIR
 
 # Set up cargo-ndk
-cargo install cargo-ndk@2.12.6
+cargo install cargo-ndk@3.2.0
 rustup target add \
         aarch64-linux-android \
         armv7-linux-androideabi \
