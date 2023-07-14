@@ -1,7 +1,7 @@
  
-flutter_rust_bridge_codegen --rust-input chia_rust_utils/src/api.rs \
-                            --dart-output lib/generated/bridge_generated.dart
 
+flutter_rust_bridge_codegen --wasm --rust-input chia_rust_utils/src/api.rs \
+                            --dart-output lib/generated/bridge_generated.dart 
 
 flutter_rust_bridge_codegen \
     -r chia_rust_utils/src/api.rs  \
