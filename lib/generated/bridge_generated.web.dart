@@ -29,6 +29,16 @@ class RustPlatform extends FlutterRustBridgeBase<RustWire>
   }
 
   @protected
+  int api2wire_box_autoadd_usize(int raw) {
+    return api2wire_usize(raw);
+  }
+
+  @protected
+  int? api2wire_opt_box_autoadd_usize(int? raw) {
+    return raw == null ? null : api2wire_box_autoadd_usize(raw);
+  }
+
+  @protected
   Uint32List api2wire_uint_32_list(Uint32List raw) {
     return raw;
   }
@@ -126,9 +136,6 @@ class RustWasmModule implements WasmModule {
   external dynamic /* void */ wire_cmd_program_opd(
       NativePortType port_, List<String> args);
 
-  external dynamic /* void */ wire_cmd_program_cldb(
-      NativePortType port_, List<String> args);
-
   external dynamic /* void */ wire_program_tree_hash(
       NativePortType port_, Uint8List ser_program_bytes);
 
@@ -142,7 +149,7 @@ class RustWasmModule implements WasmModule {
       NativePortType port_, List<String> program_list);
 
   external dynamic /* void */ wire_program_disassemble(
-      NativePortType port_, Uint8List ser_program_bytes);
+      NativePortType port_, Uint8List ser_program_bytes, int? version);
 
   external dynamic /* void */ wire_program_run(
       NativePortType port_, Uint8List ser_program_bytes, List<String> args_str);
@@ -256,9 +263,6 @@ class RustWire extends FlutterRustBridgeWasmWireBase<RustWasmModule> {
   void wire_cmd_program_opd(NativePortType port_, List<String> args) =>
       wasmModule.wire_cmd_program_opd(port_, args);
 
-  void wire_cmd_program_cldb(NativePortType port_, List<String> args) =>
-      wasmModule.wire_cmd_program_cldb(port_, args);
-
   void wire_program_tree_hash(
           NativePortType port_, Uint8List ser_program_bytes) =>
       wasmModule.wire_program_tree_hash(port_, ser_program_bytes);
@@ -276,8 +280,8 @@ class RustWire extends FlutterRustBridgeWasmWireBase<RustWasmModule> {
       wasmModule.wire_program_from_list(port_, program_list);
 
   void wire_program_disassemble(
-          NativePortType port_, Uint8List ser_program_bytes) =>
-      wasmModule.wire_program_disassemble(port_, ser_program_bytes);
+          NativePortType port_, Uint8List ser_program_bytes, int? version) =>
+      wasmModule.wire_program_disassemble(port_, ser_program_bytes, version);
 
   void wire_program_run(NativePortType port_, Uint8List ser_program_bytes,
           List<String> args_str) =>

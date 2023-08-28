@@ -116,8 +116,6 @@ void wire_cmd_program_opc(int64_t port_, struct wire_StringList *args);
 
 void wire_cmd_program_opd(int64_t port_, struct wire_StringList *args);
 
-void wire_cmd_program_cldb(int64_t port_, struct wire_StringList *args);
-
 void wire_program_tree_hash(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
 
 void wire_program_curry(int64_t port_,
@@ -128,7 +126,9 @@ void wire_program_uncurry(int64_t port_, struct wire_uint_8_list *ser_program_by
 
 void wire_program_from_list(int64_t port_, struct wire_StringList *program_list);
 
-void wire_program_disassemble(int64_t port_, struct wire_uint_8_list *ser_program_bytes);
+void wire_program_disassemble(int64_t port_,
+                              struct wire_uint_8_list *ser_program_bytes,
+                              uintptr_t *version);
 
 void wire_program_run(int64_t port_,
                       struct wire_uint_8_list *ser_program_bytes,
@@ -145,6 +145,8 @@ void wire_cats_create_cat_puzzle(int64_t port_,
                                  struct wire_uint_8_list *inner_puzzle_hash);
 
 struct wire_StringList *new_StringList_0(int32_t len);
+
+uintptr_t *new_box_autoadd_usize_0(uintptr_t value);
 
 struct wire_uint_32_list *new_uint_32_list_0(int32_t len);
 
@@ -179,7 +181,6 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_cmds_program_brun);
     dummy_var ^= ((int64_t) (void*) wire_cmd_program_opc);
     dummy_var ^= ((int64_t) (void*) wire_cmd_program_opd);
-    dummy_var ^= ((int64_t) (void*) wire_cmd_program_cldb);
     dummy_var ^= ((int64_t) (void*) wire_program_tree_hash);
     dummy_var ^= ((int64_t) (void*) wire_program_curry);
     dummy_var ^= ((int64_t) (void*) wire_program_uncurry);
@@ -191,6 +192,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_get_puzzle_from_public_key);
     dummy_var ^= ((int64_t) (void*) wire_cats_create_cat_puzzle);
     dummy_var ^= ((int64_t) (void*) new_StringList_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_usize_0);
     dummy_var ^= ((int64_t) (void*) new_uint_32_list_0);
     dummy_var ^= ((int64_t) (void*) new_uint_8_list_0);
     dummy_var ^= ((int64_t) (void*) free_WireSyncReturn);

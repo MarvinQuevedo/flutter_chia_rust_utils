@@ -136,10 +136,6 @@ abstract class Rust {
 
   FlutterRustBridgeTaskConstMeta get kCmdProgramOpdConstMeta;
 
-  Future<String> cmdProgramCldb({required List<String> args, dynamic hint});
-
-  FlutterRustBridgeTaskConstMeta get kCmdProgramCldbConstMeta;
-
   Future<U8Array32> programTreeHash(
       {required Uint8List serProgramBytes, dynamic hint});
 
@@ -163,7 +159,7 @@ abstract class Rust {
   FlutterRustBridgeTaskConstMeta get kProgramFromListConstMeta;
 
   Future<String> programDisassemble(
-      {required Uint8List serProgramBytes, dynamic hint});
+      {required Uint8List serProgramBytes, int? version, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kProgramDisassembleConstMeta;
 
@@ -714,23 +710,6 @@ class RustImpl implements Rust {
         argNames: ["args"],
       );
 
-  Future<String> cmdProgramCldb({required List<String> args, dynamic hint}) {
-    var arg0 = _platform.api2wire_StringList(args);
-    return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_cmd_program_cldb(port_, arg0),
-      parseSuccessData: _wire2api_String,
-      constMeta: kCmdProgramCldbConstMeta,
-      argValues: [args],
-      hint: hint,
-    ));
-  }
-
-  FlutterRustBridgeTaskConstMeta get kCmdProgramCldbConstMeta =>
-      const FlutterRustBridgeTaskConstMeta(
-        debugName: "cmd_program_cldb",
-        argNames: ["args"],
-      );
-
   Future<U8Array32> programTreeHash(
       {required Uint8List serProgramBytes, dynamic hint}) {
     var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
@@ -807,13 +786,15 @@ class RustImpl implements Rust {
       );
 
   Future<String> programDisassemble(
-      {required Uint8List serProgramBytes, dynamic hint}) {
+      {required Uint8List serProgramBytes, int? version, dynamic hint}) {
     var arg0 = _platform.api2wire_uint_8_list(serProgramBytes);
+    var arg1 = _platform.api2wire_opt_box_autoadd_usize(version);
     return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_program_disassemble(port_, arg0),
+      callFfi: (port_) =>
+          _platform.inner.wire_program_disassemble(port_, arg0, arg1),
       parseSuccessData: _wire2api_String,
       constMeta: kProgramDisassembleConstMeta,
-      argValues: [serProgramBytes],
+      argValues: [serProgramBytes, version],
       hint: hint,
     ));
   }
@@ -821,7 +802,7 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kProgramDisassembleConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "program_disassemble",
-        argNames: ["serProgramBytes"],
+        argNames: ["serProgramBytes", "version"],
       );
 
   Future<ApiOutputProgram> programRun(
@@ -1014,6 +995,16 @@ class RustPlatform extends FlutterRustBridgeBase<RustWire> {
       ans.ref.ptr[i] = api2wire_String(raw[i]);
     }
     return ans;
+  }
+
+  @protected
+  ffi.Pointer<ffi.UintPtr> api2wire_box_autoadd_usize(int raw) {
+    return inner.new_box_autoadd_usize_0(api2wire_usize(raw));
+  }
+
+  @protected
+  ffi.Pointer<ffi.UintPtr> api2wire_opt_box_autoadd_usize(int? raw) {
+    return raw == null ? ffi.nullptr : api2wire_box_autoadd_usize(raw);
   }
 
   @protected
@@ -1611,23 +1602,6 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _wire_cmd_program_opd = _wire_cmd_program_opdPtr
       .asFunction<void Function(int, ffi.Pointer<wire_StringList>)>();
 
-  void wire_cmd_program_cldb(
-    int port_,
-    ffi.Pointer<wire_StringList> args,
-  ) {
-    return _wire_cmd_program_cldb(
-      port_,
-      args,
-    );
-  }
-
-  late final _wire_cmd_program_cldbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Int64,
-              ffi.Pointer<wire_StringList>)>>('wire_cmd_program_cldb');
-  late final _wire_cmd_program_cldb = _wire_cmd_program_cldbPtr
-      .asFunction<void Function(int, ffi.Pointer<wire_StringList>)>();
-
   void wire_program_tree_hash(
     int port_,
     ffi.Pointer<wire_uint_8_list> ser_program_bytes,
@@ -1702,19 +1676,23 @@ class RustWire implements FlutterRustBridgeWireBase {
   void wire_program_disassemble(
     int port_,
     ffi.Pointer<wire_uint_8_list> ser_program_bytes,
+    ffi.Pointer<ffi.UintPtr> version,
   ) {
     return _wire_program_disassemble(
       port_,
       ser_program_bytes,
+      version,
     );
   }
 
   late final _wire_program_disassemblePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(ffi.Int64,
-              ffi.Pointer<wire_uint_8_list>)>>('wire_program_disassemble');
-  late final _wire_program_disassemble = _wire_program_disassemblePtr
-      .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+          ffi.Void Function(ffi.Int64, ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<ffi.UintPtr>)>>('wire_program_disassemble');
+  late final _wire_program_disassemble =
+      _wire_program_disassemblePtr.asFunction<
+          void Function(
+              int, ffi.Pointer<wire_uint_8_list>, ffi.Pointer<ffi.UintPtr>)>();
 
   void wire_program_run(
     int port_,
@@ -1823,6 +1801,20 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _new_StringList_0 = _new_StringList_0Ptr
       .asFunction<ffi.Pointer<wire_StringList> Function(int)>();
 
+  ffi.Pointer<ffi.UintPtr> new_box_autoadd_usize_0(
+    int value,
+  ) {
+    return _new_box_autoadd_usize_0(
+      value,
+    );
+  }
+
+  late final _new_box_autoadd_usize_0Ptr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.UintPtr> Function(ffi.UintPtr)>>(
+      'new_box_autoadd_usize_0');
+  late final _new_box_autoadd_usize_0 = _new_box_autoadd_usize_0Ptr
+      .asFunction<ffi.Pointer<ffi.UintPtr> Function(int)>();
+
   ffi.Pointer<wire_uint_32_list> new_uint_32_list_0(
     int len,
   ) {
@@ -1832,9 +1824,9 @@ class RustWire implements FlutterRustBridgeWireBase {
   }
 
   late final _new_uint_32_list_0Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<wire_uint_32_list> Function(
-              ffi.Int32)>>('new_uint_32_list_0');
+          ffi
+          .NativeFunction<ffi.Pointer<wire_uint_32_list> Function(ffi.Int32)>>(
+      'new_uint_32_list_0');
   late final _new_uint_32_list_0 = _new_uint_32_list_0Ptr
       .asFunction<ffi.Pointer<wire_uint_32_list> Function(int)>();
 
@@ -1847,9 +1839,9 @@ class RustWire implements FlutterRustBridgeWireBase {
   }
 
   late final _new_uint_8_list_0Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<wire_uint_8_list> Function(
-              ffi.Int32)>>('new_uint_8_list_0');
+          ffi
+          .NativeFunction<ffi.Pointer<wire_uint_8_list> Function(ffi.Int32)>>(
+      'new_uint_8_list_0');
   late final _new_uint_8_list_0 = _new_uint_8_list_0Ptr
       .asFunction<ffi.Pointer<wire_uint_8_list> Function(int)>();
 

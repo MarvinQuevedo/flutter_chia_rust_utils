@@ -30,6 +30,16 @@ class RustPlatform extends FlutterRustBridgeBase<RustWire> {
   }
 
   @protected
+  ffi.Pointer<ffi.UintPtr> api2wire_box_autoadd_usize(int raw) {
+    return inner.new_box_autoadd_usize_0(api2wire_usize(raw));
+  }
+
+  @protected
+  ffi.Pointer<ffi.UintPtr> api2wire_opt_box_autoadd_usize(int? raw) {
+    return raw == null ? ffi.nullptr : api2wire_box_autoadd_usize(raw);
+  }
+
+  @protected
   ffi.Pointer<wire_uint_32_list> api2wire_uint_32_list(Uint32List raw) {
     final ans = inner.new_uint_32_list_0(raw.length);
     ans.ref.ptr.asTypedList(raw.length).setAll(0, raw);
@@ -624,23 +634,6 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _wire_cmd_program_opd = _wire_cmd_program_opdPtr
       .asFunction<void Function(int, ffi.Pointer<wire_StringList>)>();
 
-  void wire_cmd_program_cldb(
-    int port_,
-    ffi.Pointer<wire_StringList> args,
-  ) {
-    return _wire_cmd_program_cldb(
-      port_,
-      args,
-    );
-  }
-
-  late final _wire_cmd_program_cldbPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Int64,
-              ffi.Pointer<wire_StringList>)>>('wire_cmd_program_cldb');
-  late final _wire_cmd_program_cldb = _wire_cmd_program_cldbPtr
-      .asFunction<void Function(int, ffi.Pointer<wire_StringList>)>();
-
   void wire_program_tree_hash(
     int port_,
     ffi.Pointer<wire_uint_8_list> ser_program_bytes,
@@ -715,19 +708,23 @@ class RustWire implements FlutterRustBridgeWireBase {
   void wire_program_disassemble(
     int port_,
     ffi.Pointer<wire_uint_8_list> ser_program_bytes,
+    ffi.Pointer<ffi.UintPtr> version,
   ) {
     return _wire_program_disassemble(
       port_,
       ser_program_bytes,
+      version,
     );
   }
 
   late final _wire_program_disassemblePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(ffi.Int64,
-              ffi.Pointer<wire_uint_8_list>)>>('wire_program_disassemble');
-  late final _wire_program_disassemble = _wire_program_disassemblePtr
-      .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+          ffi.Void Function(ffi.Int64, ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<ffi.UintPtr>)>>('wire_program_disassemble');
+  late final _wire_program_disassemble =
+      _wire_program_disassemblePtr.asFunction<
+          void Function(
+              int, ffi.Pointer<wire_uint_8_list>, ffi.Pointer<ffi.UintPtr>)>();
 
   void wire_program_run(
     int port_,
@@ -836,6 +833,20 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _new_StringList_0 = _new_StringList_0Ptr
       .asFunction<ffi.Pointer<wire_StringList> Function(int)>();
 
+  ffi.Pointer<ffi.UintPtr> new_box_autoadd_usize_0(
+    int value,
+  ) {
+    return _new_box_autoadd_usize_0(
+      value,
+    );
+  }
+
+  late final _new_box_autoadd_usize_0Ptr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.UintPtr> Function(ffi.UintPtr)>>(
+      'new_box_autoadd_usize_0');
+  late final _new_box_autoadd_usize_0 = _new_box_autoadd_usize_0Ptr
+      .asFunction<ffi.Pointer<ffi.UintPtr> Function(int)>();
+
   ffi.Pointer<wire_uint_32_list> new_uint_32_list_0(
     int len,
   ) {
@@ -845,9 +856,9 @@ class RustWire implements FlutterRustBridgeWireBase {
   }
 
   late final _new_uint_32_list_0Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<wire_uint_32_list> Function(
-              ffi.Int32)>>('new_uint_32_list_0');
+          ffi
+          .NativeFunction<ffi.Pointer<wire_uint_32_list> Function(ffi.Int32)>>(
+      'new_uint_32_list_0');
   late final _new_uint_32_list_0 = _new_uint_32_list_0Ptr
       .asFunction<ffi.Pointer<wire_uint_32_list> Function(int)>();
 
@@ -860,9 +871,9 @@ class RustWire implements FlutterRustBridgeWireBase {
   }
 
   late final _new_uint_8_list_0Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Pointer<wire_uint_8_list> Function(
-              ffi.Int32)>>('new_uint_8_list_0');
+          ffi
+          .NativeFunction<ffi.Pointer<wire_uint_8_list> Function(ffi.Int32)>>(
+      'new_uint_8_list_0');
   late final _new_uint_8_list_0 = _new_uint_8_list_0Ptr
       .asFunction<ffi.Pointer<wire_uint_8_list> Function(int)>();
 
