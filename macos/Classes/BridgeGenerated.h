@@ -3,11 +3,11 @@
 #include <stdlib.h>
 typedef struct _Dart_Handle* Dart_Handle;
 
-#define INFINITE_COST 9223372036854775807
-
 #define NUMBER_ZERO_BITS_PLOT_FILTER 9
 
 #define K_BC (K_B * K_C)
+
+#define INFINITE_COST 9223372036854775807
 
 typedef struct DartCObject DartCObject;
 
