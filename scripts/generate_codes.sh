@@ -2,7 +2,7 @@
 
 # flutter_rust_bridge_codegen --wasm --rust-input chia_rust_utils/src/api.rs \
 #                             --dart-output lib/generated/bridge_generated.dart 
-cargo install flutter_rust_bridge_codegen  
+#cargo install flutter_rust_bridge_codegen  --version 1.79.0
  
 flutter_rust_bridge_codegen \
     --wasm \
