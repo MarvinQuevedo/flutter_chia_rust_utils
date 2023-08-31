@@ -1,0 +1,31 @@
+FROM --platform=linux/amd64 rust:latest 
+
+RUN apt update && apt upgrade -y
+RUN rustup toolchain install nightly
+RUN rustup +nightly component add rust-src
+RUN rustup +nightly target add wasm32-unknown-unknown
+RUN cargo install wasm-pack
+RUN apt install clang -y
+RUN apt install wget -y
+RUN apt install llvm -y
+RUN apt-get install -y emscripten
+RUN apt install lsb-release wget software-properties-common gnupg -y
+RUN wget https://apt.llvm.org/llvm.sh
+RUN chmod +x llvm.sh
+RUN ./llvm.sh 14
+ 
+  
+WORKDIR /home/chia_rust_utils
+  
+RUN mkdir /home/chia_rs
+RUN mkdir /home/clvm_rs
+RUN mkdir /home/chia_rust_utils/src
+
+ 
+COPY ./chia_rs/ /home/chia_rs/
+COPY ./chia_rust_utils/build_linux_in_docker.sh /home/build_linux_in_docker.sh
+COPY ./clvm_rs/ /home/clvm_rs/
+ 
+RUN chmod 777 /home/build_linux_in_docker.sh
+
+CMD /home/build_linux_in_docker.sh
