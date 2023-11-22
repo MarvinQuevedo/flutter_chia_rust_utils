@@ -89,7 +89,8 @@ Future<void> runTest(ValueChanged send) async {
   send("-------------------");
   stopWatch.reset();
   stopWatch.start();
-  final programDart = chia_crypto_utils.Program.fromBytes(catModBytes.byteList);
+  final programDart =
+      chia_crypto_utils.Program.deserialize(catModBytes.byteList);
   final puzzleHashDart = programDart.hash();
   send(
       "ProgramDart: ${'${(await program.serializeToHex()).substring(0, 20)}...'}");
@@ -123,14 +124,14 @@ Future<void> dartCurry(ValueChanged send) async {
   final programArgs0 = chia_crypto_utils.Program.deserializeHex("ff0180");
   final programRust0Curry = programRust0.curry([programArgs0]);
   send(
-      "ProgramDart curry: ${'${programRust0Curry.serializeHex().substring(0, 20)}...'}");
+      "ProgramDart curry: ${'${programRust0Curry.toBytes().toHex().substring(0, 20)}...'}");
   final hash = programRust0Curry.hash();
   send("ProgramDart hash: $hash");
   stopWatch.stop();
   send("ProgramDart curry time: ${stopWatch.elapsedMilliseconds} μs");
   final uncurry = programRust0Curry.uncurry();
   send(
-      "ProgramDart uncurry: ${'${uncurry.mod.serializeHex().substring(0, 20)}...'}");
+      "ProgramDart uncurry: ${'${uncurry.mod.toBytes().toHex().substring(0, 20)}...'}");
 }
 
 Future<void> rustCurry(ValueChanged send) async {
