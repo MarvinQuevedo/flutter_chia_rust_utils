@@ -1,6 +1,6 @@
 name: flutter_chia_rust_utils
 description: Chia Rust utils library for use in Flutter, allow use CLVM, BLS and more libraries in your Chia Blockchain projects
-version: 0.0.61+1
+version: 0.0.62+2
 homepage: https://github.com/MarvinQuevedo/flutter_chia_rust_utils
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_rust_bridge: ^1.81.0
+  flutter_rust_bridge: ^1.82.4
   freezed_annotation: ^2.4.1
   ffi: ^2.1.0
   

@@ -13,6 +13,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
+
 import 'bridge_generated.io.dart'
     if (dart.library.html) 'bridge_generated.web.dart';
 
@@ -240,14 +241,19 @@ class RustImpl implements Rust {
   RustImpl.raw(this._platform);
   Future<Uint8List> secretKeyFromSeed({required Uint8List seed, dynamic hint}) {
     var arg0 = _platform.api2wire_uint_8_list(seed);
-    return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) =>
-          _platform.inner.wire_secret_key_from_seed(port_, arg0),
-      parseSuccessData: _wire2api_uint_8_list,
-      constMeta: kSecretKeyFromSeedConstMeta,
-      argValues: [seed],
-      hint: hint,
-    ));
+    return _platform.executeNormal(
+      FlutterRustBridgeTask(
+        callFfi: (port_) =>
+            _platform.inner.wire_secret_key_from_seed(port_, arg0),
+        parseSuccessData: _wire2api_uint_8_list,
+        constMeta: kSecretKeyFromSeedConstMeta,
+        argValues: [seed],
+        hint: hint,
+        parseErrorData: (v) {
+          return Null;
+        },
+      ),
+    );
   }
 
   FlutterRustBridgeTaskConstMeta get kSecretKeyFromSeedConstMeta =>
@@ -265,6 +271,9 @@ class RustImpl implements Rust {
       constMeta: kSecretKeyPublicKeyConstMeta,
       argValues: [sk],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -285,6 +294,9 @@ class RustImpl implements Rust {
       constMeta: kSecretKeyDerivePathHardenedConstMeta,
       argValues: [sk, path],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -305,6 +317,9 @@ class RustImpl implements Rust {
       constMeta: kSecretKeyDerivePathUnhardenedConstMeta,
       argValues: [sk, path],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -325,6 +340,9 @@ class RustImpl implements Rust {
       constMeta: kPublicKeyDerivePathUnhardenedConstMeta,
       argValues: [sk, path],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -345,6 +363,9 @@ class RustImpl implements Rust {
       constMeta: kSignatureSignConstMeta,
       argValues: [sk, msg],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -362,6 +383,9 @@ class RustImpl implements Rust {
       constMeta: kSignatureIsValidConstMeta,
       argValues: [sig],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -382,6 +406,9 @@ class RustImpl implements Rust {
       constMeta: kSignatureAggregateConstMeta,
       argValues: [sigsStream, length],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -406,6 +433,9 @@ class RustImpl implements Rust {
       constMeta: kSignatureVerifyConstMeta,
       argValues: [pk, msg, sig],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -425,6 +455,9 @@ class RustImpl implements Rust {
       constMeta: kPubMnemonicToEntropyConstMeta,
       argValues: [mnemonicWords],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -444,6 +477,9 @@ class RustImpl implements Rust {
       constMeta: kPubEntropyToMnemonicConstMeta,
       argValues: [entropy],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -462,6 +498,9 @@ class RustImpl implements Rust {
       constMeta: kPubEntropyToSeedConstMeta,
       argValues: [entropy],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -479,6 +518,9 @@ class RustImpl implements Rust {
       constMeta: kBytesToHexConstMeta,
       argValues: [bytes],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -496,6 +538,9 @@ class RustImpl implements Rust {
       constMeta: kHexToBytesConstMeta,
       argValues: [hex],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -513,6 +558,9 @@ class RustImpl implements Rust {
       constMeta: kBytesToSha256ConstMeta,
       argValues: [bytes],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -532,6 +580,9 @@ class RustImpl implements Rust {
       constMeta: kPubMasterToWalletUnhardenedIntermediateConstMeta,
       argValues: [master],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -553,6 +604,9 @@ class RustImpl implements Rust {
       constMeta: kPubMasterToWalletUnhardenedConstMeta,
       argValues: [master, idx],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -572,6 +626,9 @@ class RustImpl implements Rust {
       constMeta: kPubMasterToWalletHardenedIntermediateConstMeta,
       argValues: [master],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -593,6 +650,9 @@ class RustImpl implements Rust {
       constMeta: kPubMasterToWalletHardenedConstMeta,
       argValues: [master, idx],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -613,6 +673,9 @@ class RustImpl implements Rust {
       constMeta: kPubMasterToPoolSingletonConstMeta,
       argValues: [master, poolWalletIdx],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -637,6 +700,9 @@ class RustImpl implements Rust {
       constMeta: kPubMasterToPoolAuthenticationConstMeta,
       argValues: [sk, poolWalletIdx, idx],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -654,6 +720,9 @@ class RustImpl implements Rust {
       constMeta: kCmdsProgramRunConstMeta,
       argValues: [args],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -671,6 +740,9 @@ class RustImpl implements Rust {
       constMeta: kCmdsProgramBrunConstMeta,
       argValues: [args],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -689,6 +761,9 @@ class RustImpl implements Rust {
       constMeta: kCmdProgramOpcConstMeta,
       argValues: [args],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -707,6 +782,9 @@ class RustImpl implements Rust {
       constMeta: kCmdProgramOpdConstMeta,
       argValues: [args],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -725,6 +803,9 @@ class RustImpl implements Rust {
       constMeta: kProgramTreeHashConstMeta,
       argValues: [serProgramBytes],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -746,6 +827,9 @@ class RustImpl implements Rust {
       constMeta: kProgramCurryConstMeta,
       argValues: [serProgramBytes, argsStr],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -764,6 +848,9 @@ class RustImpl implements Rust {
       constMeta: kProgramUncurryConstMeta,
       argValues: [serProgramBytes],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -782,6 +869,9 @@ class RustImpl implements Rust {
       constMeta: kProgramFromListConstMeta,
       argValues: [programList],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -802,6 +892,9 @@ class RustImpl implements Rust {
       constMeta: kProgramDisassembleConstMeta,
       argValues: [serProgramBytes, version],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -823,6 +916,9 @@ class RustImpl implements Rust {
       constMeta: kProgramRunConstMeta,
       argValues: [serProgramBytes, argsStr],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -842,6 +938,9 @@ class RustImpl implements Rust {
       constMeta: kProgramFromAtomBytesConstMeta,
       argValues: [serProgramBytes],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -861,6 +960,9 @@ class RustImpl implements Rust {
       constMeta: kProgramToAtomBytesConstMeta,
       argValues: [serProgramBytes],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -880,6 +982,9 @@ class RustImpl implements Rust {
       constMeta: kGetPuzzleFromPublicKeyConstMeta,
       argValues: [pk],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
@@ -902,6 +1007,9 @@ class RustImpl implements Rust {
       constMeta: kCatsCreateCatPuzzleConstMeta,
       argValues: [tailHash, innerPuzzleHash],
       hint: hint,
+      parseErrorData: (v) {
+        return Null;
+      },
     ));
   }
 
