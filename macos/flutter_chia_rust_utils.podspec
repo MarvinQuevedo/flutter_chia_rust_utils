@@ -1,4 +1,4 @@
-release_tag_name = 'flutter_chia_rust_utils-v0.0.61+1' # generated; do not edit
+release_tag_name = 'flutter_chia_rust_utils-v0.0.62+2' # generated; do not edit
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint flutter_chia_rust_utils.podspec` to validate before publishing.
