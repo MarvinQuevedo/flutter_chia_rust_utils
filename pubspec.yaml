@@ -51,7 +51,7 @@ flutter:
       ios:
         pluginClass: FlutterChiaBlsPlugin
       linux:
-        pluginClass: FlutterChiaBlsPlugin
+        pluginClass: FlutterChiaRustUtilsPlugin
       macos:
         pluginClass: FlutterChiaRustUtilsPlugin
       windows:

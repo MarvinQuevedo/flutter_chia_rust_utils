@@ -38,30 +38,49 @@ target_include_directories(${PLUGIN_NAME} INTERFACE
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 
-# List of absolute paths to libraries that should be bundled with the plugin.
-# This list could contain prebuilt libraries, or libraries created by an
-# external build triggered from this build file.
-set(flutter_chia_rust_utils_bundled_libraries
-  ""
-  PARENT_SCOPE
-)
+# Define the Rust library path
+set(RUST_LIB_NAME "librust_bls_flutter.so")
+set(RUST_LIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/${RUST_LIB_NAME}")
 
-
-# Download the binaries if they are not already present.
-set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
-set(ArchivePath "${LibRoot}.tar.gz")
-if(NOT EXISTS ${ArchivePath})
-  file(DOWNLOAD
-    "https://github.com/YourGitHubAccount/repo_name/releases/download/${LibraryVersion}/other.tar.gz"
-    ${ArchivePath}
-    TLS_VERIFY ON
-  )
+# Check if Rust library exists, if not try to download/extract it
+if(NOT EXISTS ${RUST_LIB_PATH})
+  set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
+  set(ArchivePath "${LibRoot}.tar.gz")
+  
+  if(EXISTS ${ArchivePath})
+    message(STATUS "Extracting Rust library from ${ArchivePath}")
+    execute_process(
+      COMMAND ${CMAKE_COMMAND} -E tar xzf ${ArchivePath}
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      RESULT_VARIABLE TAR_RESULT
+    )
+    if(TAR_RESULT EQUAL 0)
+      # Find the extracted library and copy it to the expected location
+      file(GLOB_RECURSE EXTRACTED_LIB "${CMAKE_CURRENT_SOURCE_DIR}/linux-*/${RUST_LIB_NAME}")
+      if(EXTRACTED_LIB)
+        list(GET EXTRACTED_LIB 0 FIRST_LIB)
+        file(COPY ${FIRST_LIB} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
+        message(STATUS "Copied Rust library to ${RUST_LIB_PATH}")
+      endif()
+    endif()
+  else()
+    message(WARNING "Rust library not found and no archive available. Please build the Rust library first using: ./scripts/build-linux-in-linux.sh")
+  endif()
 endif()
 
 # List of absolute paths to libraries that should be bundled with the plugin.
-# This list could contain prebuilt libraries, or libraries created by an
-# external build triggered from this build file.
-set(simple_audio_bundled_libraries
-  "${CMAKE_CURRENT_SOURCE_DIR}/libsimple_audio.so"
+# This list should contain the Rust library that needs to be distributed with the app.
+set(flutter_chia_rust_utils_bundled_libraries
+  "${RUST_LIB_PATH}"
   PARENT_SCOPE
 )
+
+# Custom target to build Rust library if needed
+add_custom_target(build_rust_lib
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/build-linux-in-linux.sh
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..
+  COMMENT "Building Rust library for Linux"
+)
+
+# Make the plugin depend on the Rust library build
+add_dependencies(${PLUGIN_NAME} build_rust_lib)
