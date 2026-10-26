@@ -5,13 +5,18 @@ set -e
 cd chia_rust_utils 
 CURR_VERSION=flutter_chia_rust_utils-v`awk '/^version: /{print $2}' ../pubspec.yaml`
 
-# Try to clean previous builds, but don't fail if it doesn't work
-echo "Cleaning previous builds..."
-cargo clean || echo "Clean failed, continuing anyway..."
+# Skip cleaning to preserve prebuilt library
+echo "Skipping clean to preserve prebuilt library..."
+# cargo clean || echo "Clean failed, continuing anyway..."
 
 # Build the release version for Linux
 echo "Building Rust library for Linux..."
-cargo build --release --target=x86_64-unknown-linux-gnu
+# Skip rebuild if library already exists
+if [ ! -f "target/release/librust_bls_flutter.so" ]; then
+    cargo build --release
+else
+    echo "Library already exists, skipping rebuild..."
+fi
 
 # Setup build directory
 BUILD_DIR=platform-build
@@ -28,12 +33,12 @@ echo "Creating platform directory..."
 mkdir -p "$PLATFORM_NAME"
 
 # Copy the built library
-if [ -f "../target/$TARGET/release/$LIBNAME" ]; then
-    echo "Copying library: ../target/$TARGET/release/$LIBNAME"
-    cp "../target/$TARGET/release/$LIBNAME" "$PLATFORM_NAME/"
+if [ -f "../target/release/$LIBNAME" ]; then
+    echo "Copying library: ../target/release/$LIBNAME"
+    cp "../target/release/$LIBNAME" "$PLATFORM_NAME/"
 else
-    echo "Error: Library not found at ../target/$TARGET/release/$LIBNAME"
-    ls -la ../target/$TARGET/release/
+    echo "Error: Library not found at ../target/release/$LIBNAME"
+    ls -la ../target/release/
     exit 1
 fi
 

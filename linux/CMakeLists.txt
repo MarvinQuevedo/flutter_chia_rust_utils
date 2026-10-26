@@ -68,6 +68,14 @@ if(NOT EXISTS ${RUST_LIB_PATH})
   endif()
 endif()
 
+# Link the Rust library if it exists
+if(EXISTS ${RUST_LIB_PATH})
+  target_link_libraries(${PLUGIN_NAME} PRIVATE ${RUST_LIB_PATH})
+  message(STATUS "Linking Rust library: ${RUST_LIB_PATH}")
+else()
+  message(WARNING "Rust library not found at: ${RUST_LIB_PATH}")
+endif()
+
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list should contain the Rust library that needs to be distributed with the app.
 set(flutter_chia_rust_utils_bundled_libraries
@@ -83,4 +91,4 @@ add_custom_target(build_rust_lib
 )
 
 # Make the plugin depend on the Rust library build
-add_dependencies(${PLUGIN_NAME} build_rust_lib)
+# add_dependencies(${PLUGIN_NAME} build_rust_lib)  # Commented out to use prebuilt library

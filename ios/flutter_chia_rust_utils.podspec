@@ -35,9 +35,11 @@ A new Flutter plugin project.
   s.platform = :ios, '9.0'
   s.static_framework = true
   s.vendored_frameworks = "Frameworks/#{framework_name}"
-  s.pod_target_xcconfig = { 'STRIP_STYLE' => 'non-global'  }
-
-  # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' } 
-  s.user_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  # Keep module generation enabled and avoid excluding arm64 simulator,
+  # which is required on Apple Silicon.
+  s.pod_target_xcconfig = {
+    'STRIP_STYLE' => 'non-global',
+    'DEFINES_MODULE' => 'YES',
+  }
+  s.user_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 end
